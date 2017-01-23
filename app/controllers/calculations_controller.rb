@@ -25,10 +25,15 @@ class CalculationsController < ApplicationController
     @principal = params[:principal_value].to_f
 
     # My code
-    @monthly_payment = ((@principal)+(@principal*@apr))/(@years*12)
+    months = @years*12
+    rate = @apr/1200
+    @monthly_payment = @principal * (rate + (rate / ((1+rate) ** months - 1) ) )
 
     render("loan_payment.html.erb")
   end
+
+
+
 
   def time_between
     @starting = Chronic.parse(params[:starting_time])
@@ -56,6 +61,9 @@ class CalculationsController < ApplicationController
 
     render("time_between.html.erb")
   end
+
+
+
 
   def descriptive_statistics
     @numbers = params[:list_of_numbers].gsub(',', '').split.map(&:to_f)

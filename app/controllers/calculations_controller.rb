@@ -7,11 +7,19 @@ class CalculationsController < ApplicationController
     #My Code
     @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces =  @text.length - @text.count(" ")
+    @character_count_without_spaces =  @text.gsub(/[\s\n]/, "").length
 
     @word_count = @text.count(" ") + 1
 
-    @occurrences = @text.count(@special_word)
+    text = @text.downcase
+    words = text.split(" ")
+    num = 0
+    words.each{|w|
+      if w == @special_word.downcase
+        num += 1
+      end
+    }
+    @occurrences = num
 
     render("word_count.html.erb")
   end

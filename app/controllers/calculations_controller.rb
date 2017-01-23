@@ -4,45 +4,28 @@ class CalculationsController < ApplicationController
     @text = params[:user_text]
     @special_word = params[:user_word]
 
-    # ================================================================================
-    # Your code goes below.
-    # The text the user input is in the string @text.
-    # The special word the user input is in the string @special_word.
-    # ================================================================================
+    #My Code
+    @character_count_with_spaces = @text.length
 
+    @character_count_without_spaces =  @text.length - @text.count(" ")
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @word_count = @text.count(" ") + 1
 
-    @character_count_without_spaces = "Replace this string with your answer."
-
-    @word_count = "Replace this string with your answer."
-
-    @occurrences = "Replace this string with your answer."
-
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+    @occurrences = @text.count(@special_word)
 
     render("word_count.html.erb")
   end
+
+
+
 
   def loan_payment
     @apr = params[:annual_percentage_rate].to_f
     @years = params[:number_of_years].to_i
     @principal = params[:principal_value].to_f
 
-    # ================================================================================
-    # Your code goes below.
-    # The annual percentage rate the user input is in the decimal @apr.
-    # The number of years the user input is in the integer @years.
-    # The principal value the user input is in the decimal @principal.
-    # ================================================================================
-
-    @monthly_payment = "Replace this string with your answer."
-
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+    # My code
+    @monthly_payment = ((@principal)+(@principal*@apr))/(@years*12)
 
     render("loan_payment.html.erb")
   end

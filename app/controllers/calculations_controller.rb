@@ -9,9 +9,11 @@ class CalculationsController < ApplicationController
 
     @character_count_without_spaces =  @text.gsub(/[\s\n]/, "").length
 
-    @word_count = @text.count(" ") + 1
+    temp = @text.gsub(/[\n.,?!]/, "")
+    words = temp.split(" ")
+    @word_count = words.size
 
-    text = @text.downcase
+    text =  @text.gsub(/[.,?!\n]/,"").downcase
     words = text.split(" ")
     num = 0
     words.each{|w|

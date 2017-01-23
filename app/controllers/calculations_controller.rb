@@ -40,12 +40,12 @@ class CalculationsController < ApplicationController
     @ending = Chronic.parse(params[:ending_time])
 
     #My code
-    @seconds = @ending.sec - @starting.sec
-    @minutes = @ending.min - @starting.min
-    @hours = @ending.hour - @starting.hour
-    @days = @ending.yday - @starting.yday
+    @seconds = (@starting - @ending)
+    @minutes = @seconds/60
+    @hours = @seconds/3600
+    @days = @hours/24
     @weeks = @days/7
-    @years = @ending.year  - @starting.year
+    @years = @weeks/52
 
     render("time_between.html.erb")
   end
@@ -89,7 +89,18 @@ class CalculationsController < ApplicationController
 
     @variance = var/len
     @standard_deviation = Math.sqrt(@variance)
-    @mode = "Replace this string with your answer."
+
+    #Check
+    frequencies = Hash.new(0)
+    @numbers.each{|x|
+      frequencies[x] += 1
+    }
+    frequencies = frequencies.sort_by{|x,y|
+      y
+    }
+    frequencies.reverse!
+    mde = frequencies[0]
+    @mode = mde
 
     render("descriptive_statistics.html.erb")
   end

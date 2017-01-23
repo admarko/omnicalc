@@ -59,23 +59,36 @@ class CalculationsController < ApplicationController
     # My code
     len = @numbers.length
     sorted = @numbers.sort
-    half = len/2
 
     @sorted_numbers = sorted
     @count = len
     @minimum = @numbers.min
     @maximum = @numbers.max
     @range = @numbers.max - @numbers.min
-    @median = "Replace this string with your answer."
+
+    half = len/2
+    if len % 2 == 0
+      med = (sorted[half]+sorted[half-1])/2
+    else
+      med = sorted[half]
+    end
+    @median = med
     sum = 0
+
+
     @numbers.each{|i|
       sum += i
     }
     @sum = sum
     @mean = sum/len
 
-    @variance = "Replace this string with your answer."
-    @standard_deviation = "Replace this string with your answer."
+    var = 0
+    @numbers.each{|x|
+      var = var + (x-@mean)**2
+    }
+
+    @variance = var/len
+    @standard_deviation = Math.sqrt(@variance)
     @mode = "Replace this string with your answer."
 
     render("descriptive_statistics.html.erb")
